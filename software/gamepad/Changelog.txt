@@ -1,0 +1,21 @@
+This file documents changes in the software, firmware and hardware of the
+HIDKeys device. New entries are always appended to the end of the file.
+Scroll down to the bottom to see the most recent changes.
+
+* Release 2006-02-07
+
+- Updated to new version of USB driver. This version has major bugfixes. See
+  Changelog in usbdrv directory for more details.
+
+* Release 2006-03-14
+
+- Added series diodes (for voltage reduction) in supply in circuit diagram.
+- Updated to new driver version.
+- Changed License to GPL2
+
+* Release 2007-03-29
+
+- Updated to newest version of v-usb.
+- Fixed errors reported by gcc 4.6.2.
+
+* Release 2012-12-08

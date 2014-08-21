@@ -1,0 +1,164 @@
+Cmp-Mod V01 Created by Cvpcb (2014-08-08 BZR 5060)-product   date = lør 16 aug 2014 23:24:54 CEST
+
+BeginCmp
+TimeStamp = /53DA6A27;
+Reference = C1;
+ValeurCmp = 100nF;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA6A5E;
+Reference = C2;
+ValeurCmp = 100nF;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA6A74;
+Reference = C3;
+ValeurCmp = 100nF;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA6159;
+Reference = C4;
+ValeurCmp = 10pF;
+IdModule  = Capacitors_SMD:c_0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA6177;
+Reference = C5;
+ValeurCmp = 10pF;
+IdModule  = Capacitors_SMD:c_0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53EFCE4C;
+Reference = C6;
+ValeurCmp = 10uF;
+IdModule  = Capacitors_Tantalum_SMD:TantalC_SizeB_EIA-3528_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DB6F53;
+Reference = CON1;
+ValeurCmp = AVR-ISP-6;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x03;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA6022;
+Reference = CON2;
+ValeurCmp = USB-MINI-B;
+IdModule  = MyConnectors:USB_Micro_B_SMD+DIP_long;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E9423A;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = MyCustomSMD:SMD_0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E922B2;
+Reference = D2;
+ValeurCmp = ZENER;
+IdModule  = Diodes_SMD:Diode-MiniMELF_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E92269;
+Reference = D3;
+ValeurCmp = ZENER;
+IdModule  = Diodes_SMD:Diode-MiniMELF_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E29466;
+Reference = IC1;
+ValeurCmp = ATMEGA328P-A;
+IdModule  = SMD_Packages:TQFP32;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DB6BFD;
+Reference = P1;
+ValeurCmp = CONN_12;
+IdModule  = MyPinheaders:Pinrow_12p_oval;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DB6BEB;
+Reference = P2;
+ValeurCmp = CONN_12;
+IdModule  = MyPinheaders:Pinrow_12p_oval;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA8D84;
+Reference = R1;
+ValeurCmp = 10K;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA8DE4;
+Reference = R2;
+ValeurCmp = 10K;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E94153;
+Reference = R3;
+ValeurCmp = 2.2K;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DB71E3;
+Reference = R4;
+ValeurCmp = 68R;
+IdModule  = MyCustomSMD:SMD_0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DB7206;
+Reference = R5;
+ValeurCmp = 68R;
+IdModule  = MyCustomSMD:SMD_0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E09FEC;
+Reference = R6;
+ValeurCmp = 2.2K;
+IdModule  = MyCustomSMD:SMD_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA8D5E;
+Reference = SW1;
+ValeurCmp = SW_PUSH;
+IdModule  = MyCustomSMD:3x6_smd_button;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA8DD8;
+Reference = SW2;
+ValeurCmp = SW_PUSH;
+IdModule  = MyCustomSMD:3x6_smd_button;
+EndCmp
+
+BeginCmp
+TimeStamp = /53DA60C0;
+Reference = X1;
+ValeurCmp = 12MHz;
+IdModule  = MyCustomSMD:crystal_5032_2p;
+EndCmp
+
+EndListe
