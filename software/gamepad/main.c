@@ -1,13 +1,3 @@
-/* Name: main.c
- * Project: HID-Test
- * Author: Christian Starkjohann
- * Creation Date: 2006-02-02
- * Tabsize: 4
- * Copyright: (c) 2006 by OBJECTIVE DEVELOPMENT Software GmbH
- * License: GNU GPL v2 (see License.txt) or proprietary (CommercialLicense.txt)
- * This Revision: $Id$
- */
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
@@ -16,31 +6,18 @@
 
 #include <util/delay.h>
 
-
-/* ----------------------- hardware I/O abstraction ------------------------ */
-
-
 static void hardwareInit(void)
 {
-uchar	i, j;
-
-    PORTB = 0xff;   /* activate all pull-ups */
-    DDRB = 0;       /* all pins input */
-    PORTC = 0xff;   /* activate all pull-ups */
+//    PORTB = 0xff;   /* activate all pull-ups */
+    DDRB = 0b00100000;       /* all pins input */
+//    PORTC = 0xff;   /* activate all pull-ups */
     DDRC = 0;       /* all pins input */
-    PORTD = 0b01111011;   /* 1111 1010 bin: activate pull-ups except on USB lines */
     DDRD =  0b10000100;   /* 0000 0111 bin: all pins input except USB (-> USB reset) */
-	j = 0;
-	while(--j){     /* USB Reset by device only required on Watchdog Reset */
-		i = 0;
-		while(--i); /* delay >10ms for USB reset */
-	}
     DDRD = 0x02;    /* 0000 0010 bin: remove USB reset condition */
-    /* configure timer 0 for a rate of 12M/(1024 * 256) = 45.78 Hz (~22ms) */
-    TCCR0B = 5;      /* timer 0 prescaler: 1024 */
 }
 
-/* ------------------------------------------------------------------------- */
+uchar sentMask;
+uchar readMask;
 
 /* ------------------------------------------------------------------------- */
 /* ----------------------------- USB interface ----------------------------- */
@@ -107,24 +84,66 @@ usbMsgLen_t usbFunctionSetup(uchar data[8]) {
 
 /* ------------------------------------------------------------------------- */
 
+
+// Interrupt for Port D (Where the arrows are)
+ISR(PCINT1_vect) {
+    readMask &= 0b00001111;
+    // Right or left?
+    if (!(PINC & (1<<PC5))) {       // If left is pushed set bit 6 and 
+		readMask |= (3<<4);      // 7 to '11' (-1)
+	} else if (!(PINC & (1<<PC3))) { // If right is pushed, set bit 6 and
+		readMask |= (1<<4);      // 7 to '01' (1)
+        readMask &= ~(1<<5);
+	}                            // bits to '00' (0) - neutral.
+
+	// Up or down?
+    if (!(PINC & (1<<PC4))) {        // If up
+		readMask |= (3<<6);
+	} else if (!(PINC & (1<<PC2))) {  // If down
+		readMask |= (1<<6);
+        readMask &= ~(1<<7);
+	}
+}
+
+// Interrupt for Port B (Where the buttons are)
+ISR(PCINT0_vect) {
+    readMask &= 0b11110000;
+	if (!(PINB & (1<<PB3))) readMask |= 1;
+	if (!(PINB & (1<<PB2))) readMask |= 1<<1;
+	if (!(PINB & (1<<PB4))) readMask |= 1<<2;
+	if (!(PINB & (1<<PB1))) readMask |= 1<<3;
+}
+
+void initButtonInterrupts(void) {
+	PCICR |= (1<<PCIE1) | (1<<PCIE0);
+	PCMSK1 |= (1<<PC5) | (1<<PC4) | (1<<PC3) | (1<<PC2);
+	PCMSK0 |= (1<<PB1) | (1<<PB2) | (1<<PB3) | (1<<PB4);
+}
+
 int	main(void)
 {
+	uchar i;
 	wdt_enable(WDTO_2S);
     hardwareInit();
+    initButtonInterrupts();
 	usbInit();
+    usbDeviceDisconnect(); // enforce re-enumeration
+    for(i = 0; i<250; i++) { // wait 500 ms
+        wdt_reset(); // keep the watchdog happy
+        _delay_ms(2);
+    }
+    usbDeviceConnect();
+
 	sei();
-    uint8_t keyDidChange = 1;
 	while(1) {
 		wdt_reset();
+        _delay_ms(20);
 		usbPoll();
-
-        if(keyDidChange && usbInterruptIsReady()){
-            keyDidChange = 1;
-            /* use last key and not current key status in order to avoid lost
-               changes in key status. */
-
-            reportBuffer.buttonMask = 0b01011011;
+		
+        if ((reportBuffer.buttonMask!=readMask)&(usbInterruptIsReady())){
+            reportBuffer.buttonMask = readMask;
             usbSetInterrupt((void *)&reportBuffer, sizeof(reportBuffer));
+			
         }
 	}
 	return 0;

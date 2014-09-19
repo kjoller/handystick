@@ -1,0 +1,20 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+#define DELAY	500
+int main(void) {
+	DDRB = (1<<PB5);
+	DDRC = 0;
+    uint8_t pin = 0;
+    
+	while (1) {
+		if (PINB & (1<<((pin%4)+1))) {
+			PORTB |= (1<<PB5);
+		} else {
+			PORTB &= ~(1<<PB5);
+            pin++;
+            _delay_ms(300);
+		}
+	}
+	return (0);
+}

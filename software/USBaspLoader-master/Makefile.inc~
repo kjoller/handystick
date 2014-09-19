@@ -6,9 +6,9 @@
 # License: GNU GPL v2 (see License.txt)
 
 F_CPU = 12000000
-DEVICE = atmega88pa
+DEVICE = atmega88p
 
-# where the update ng firmware should be located (starting address)
+# where the updating firmware should be located (starting address)
 FLASHADDRESS = 0x0000
 
 # use any fix (ATxmega compatible) crc32, uncomment to disable feature or set automatically with value "0"
@@ -70,7 +70,7 @@ endif
 
 FUSEOPT_88              = -U lfuse:w:0xd7:m -U hfuse:w:0xd4:m -U efuse:w:0xf8:m
 BOOTLOADER_ADDRESS_88   = 0x1800
-DEFINES_88              = -DCONFIG_USE__EXCESSIVE_ASSEMBLER -DCONFIG_NO__NEED_WATCHDOG -DCONFIG_NO__PRECISESLEEP
+DEFINES_88              = -DCONFIG_USE__EXCESSIVE_ASSEMBLER -DCONFIG_NO__NEED_WATCHDOG -DCONFIG_NO__PRECISESLEEP -DCONFIG_NO__EEPROM_BYTE_ACCESS
 ifeq ($(F_CPU), 12000000)
 DEFINES_88             += -DCONFIG_NO__FLASH_BYTE_READACCESS
 endif
